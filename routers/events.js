@@ -2,16 +2,18 @@ const express = require('express');
 const router = express.Router();
 const controllerEvents = require('../controllers/events.js');
 
-//index
+
+
+// INDEX — lista eventi: GET /events
 router.get('/', controllerEvents.index);
 
-//show
+// SHOW — evento singolo: GET /events/:id
 router.get('/:id', controllerEvents.show);
 
-//store
+// STORE — crea evento: POST /events
 router.post('/', controllerEvents.store);
 
-//update
+// UPDATE — aggiorna evento: PUT /events/:id
 router.put('/:id', controllerEvents.update);
 
 module.exports = router;

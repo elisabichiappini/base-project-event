@@ -7,7 +7,7 @@ class Event {
     static lastId = 0;
 
     constructor (id, title, description, date, maxSeat) {
-        this.id = id || Event.getNextid();
+        this.id = id || Event.getNextId();
         this.title = title;
         this.description = description;
         this.date = date;
@@ -15,7 +15,7 @@ class Event {
     }
 
     // Genera un nuovo ID incrementale
-    static getNextid() {
+    static getNextId() {
         Event.lastId = (Event.lastId || 0) + 1;
         return Event.lastId;
     }
@@ -27,7 +27,7 @@ class Event {
     }
 
     // Salva tutti gli eventi nel file JSON
-    static saveEvent(events) {
+    static saveEvents(events) {
         fs.writeFileSync(filePath, JSON.stringify(events, null, 2), 'utf-8');
     }
 
@@ -56,7 +56,7 @@ class Event {
             newEvent.maxSeat
         );
         events.push(event);
-        Event.saveEvent(events);
+        Event.saveEvents(events);
         console.log(`creato nuovo evento : ${event.title}`);
         return event;
     }
@@ -68,7 +68,7 @@ class Event {
         if(index === -1) return null;
 
         events[index] = {...events[index], ...updateData};
-        Event.saveEvent(events);
+        Event.saveEvents(events);
         return events[index];
     }
 }

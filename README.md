@@ -24,3 +24,13 @@ db/events.json → contiene i dati degli eventi.
 - Come gestire errori e middleware in Express.
 
 - Come aggiornare un record con PUT.
+
+GET / → HOME
+
+GET /events → INDEX
+
+GET /events/:id → SHOW
+
+POST /events → STORE
+
+PUT /events/:id → UPDATE

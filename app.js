@@ -3,26 +3,38 @@ const app = express();
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || 'localhost';
 
-// Middleware per gestire JSON nel body
 app.use(express.json());
 
-//Import router
+// ROUTER EVENTI
 const routerEvents = require('./routers/events.js');
 
-// Monta le rotte /events
+// 👉 HOME qui, NON nel router events
+app.get('/', (req, res) => {
+    res.json({
+        message: "Benvenuta nella Event API 🎉",
+        endpoints: {
+            listaEventi: "/events",
+            eventoSingolo: "/events/:id",
+            creaEvento: "POST /events",
+            aggiornaEvento: "PUT /events/:id"
+        }
+    });
+});
+
+// 👉 Monta il router degli eventi
 app.use('/events', routerEvents);
 
-//middleware geenrico per loggare ogni richeista
+// MIDDLEWARE LOG
 app.use((req, res, next) => {
     console.log(`[${req.method}] ${req.url}`);
     next();
 });
 
-//middleware per gestire rotte non trovate
+// ERRORE 404
 app.use((req, res) => {
-    res.status(404).json({error: 'rotta non trovata'});
+    res.status(404).json({ error: 'rotta non trovata' });
 });
 
 app.listen(port, () => {
-    console.log(`server attivo su http://${host}:${port}`);
+    console.log(`Server attivo su http://${host}:${port}`);
 });
