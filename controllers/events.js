@@ -8,8 +8,7 @@ const index = (req, res) => {
         res.json(events);
     } catch( error) {
         res.status(500).json({erorr: error.message})
-    }
-    
+    }    
 }
 
 // Mostra un evento specifico per ID
@@ -27,12 +26,28 @@ const show = (req, res) => {
         })
     }
 }
+
+//crare un nuovo evento
 const store = (req, res) => {
-    res.send('sono store');
+    try {
+        const newEvent = eventModel.createEvent(req.body);
+        res.status(201).json(newEvent);
+    } catch (error) {
+            res.status(500).json({error: 'errore durante la creazione evento'});
+    }
 }
+
 const update = (req, res) => {
-    res.send('sono update');
-}
+    try {
+        const updateEvent = eventModel.updateEvent(parseInt(req.params.id), req.body);
+        if(!updateEvent) {
+            return res.status(404).json({ error: 'evento non trovato'});
+        }
+        res.json(updateEvent);
+    } catch(error) {
+        res.status(500).json({error: 'errore durante aggiornamento evento'});
+    }
+};
 
 module.exports = {
     index, store, show, update
