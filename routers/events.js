@@ -4,5 +4,5 @@ const controllerEvents = require('../controllers/events.js');
 router.get('/', controllerEvents.index);
 router.get('/:id', controllerEvents.show);
 router.post('/', controllerEvents.store);
-router.put('/:event', controllerEvents.update);
+router.put('/:id', controllerEvents.update);
 module.exports = router;

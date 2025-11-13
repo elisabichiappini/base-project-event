@@ -1,56 +1,75 @@
 const fs = require('fs');
 const path = require('path');
-const filePath = path.join(__dirname, "../db/event.json");
+
+// Percorso assoluto del file JSON
+const filePath = path.join(__dirname, "../db/events.json");
 class Event {
     static lastId = 0;
-    constructor (id, description, date, maxSeat) {
+
+    constructor (id, title, description, date, maxSeat) {
         this.id = id || Event.getNextid();
         this.title = title;
         this.description = description;
         this.date = date;
         this.maxSeat = maxSeat;
     }
+
+    // Genera un nuovo ID incrementale
     static getNextid() {
         Event.lastId = (Event.lastId || 0) + 1;
         return Event.lastId;
     }
-    static getEvent() {
-        return require(filePath);
+
+    // Legge tutti gli eventi dal file JSON
+    static getEvents() {
+        const data = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(data);
     }
-    static saveEvent(event) {
-        return new Promise ((resolve, reject) => {
-            Event.getEvent()
-            .then(((events) => {
-                events.push(event);
-                fs.writeFile(filePath, JSON.parse(events), (error) => {
-                    if(error) {
-                        return reject(error);
-                    }
-                    resolve();
-                })
-                .catch((error) => reject(error));
-            }));
-        })
+
+    // Salva tutti gli eventi nel file JSON
+    static saveEvent(events) {
+        fs.writeFileSync(filePath, JSON.stringify(events, null, 2), 'utf-8');
     }
-    static createEvent(event) {
-        const newEvent = JSON.stringify([...Event.getEvent(), {...event}]);
-        fs.writeFileSync(filePath, newEvent, 'utf-8');
-        console.log(`creato nuovo evento con successo ${event.title}`);
-    }
+
+
+    // Restituisce un evento specifico per ID
     static getEventById(id) {
-        const events = require(filePath);
+        const events = Event.getEvents();
         return events.find((event => event.id === id));
     }
+
+    // Filtra gli eventi in base a parametri
     static getEventFiltered(filters) {
-        const events = require(filePath);
-        return events.filter((event) => {
-            for(const element in filters) {
-                if(event[element] !== filters[element]){
-                    return false;
-                }
-                return true;
-            }
-        })
+        const events = Event.getEvents();
+        return events.filter((event) => Object.keys(filters).every(key => event[key] === filters[key])
+        );
+    }
+
+    // Crea e salva un nuovo evento
+    static createEvent(newEvent) {
+        const events = Event.getEvents();
+        const event = new Event(
+            newEvent.id,
+            newEvent.title,
+            newEvent.description,
+            newEvent.date,
+            newEvent.maxSeat
+        );
+        events.push(event);
+        Event.saveEvent(events);
+        console.log(`creato nuovo evento : ${event.title}`);
+        return event;
+    }
+
+    //aggiorna evento esistente
+    static updateEvent(id, updateData) {
+        const events = Event.getEvents();
+        const index = events.findIndex(e => e.id === id);
+        if(index === -1) return null;
+
+        events[index] = {...events[index], ...updateData};
+        Event.saveEvent(events);
+        return events[index];
     }
 }
-module.exports = Event
+module.exports = Event;
