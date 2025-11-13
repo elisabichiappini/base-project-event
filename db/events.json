@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Festival di Sanremo",
+        "description": "A live concert featuring local bands",
+        "date": "2025-07-20",
+        "maxSeat": 200
+    },
+    {
+        "id": 2,
+        "title": "Festival di Cannes",
+        "description": "A live concert featuring local bands",
+        "date": "2025-03-03",
+        "maxSeat": 300
+    },
+    {
+        "id": 3,
+        "title": "Festival del cinema di Venezia",
+        "description": "A live concert featuring local bands",
+        "date": "2025-09-11",
+        "maxSeat": 5
+    }
+]
