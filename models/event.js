@@ -4,7 +4,7 @@ const filePath = path.join(__dirname, "../db/event.json");
 class Event {
     static lastId = 0;
     constructor (id, description, date, maxSeat) {
-        this.id = id || Event.getNextId();
+        this.id = id || Event.getNextid();
         this.title = title;
         this.description = description;
         this.date = date;

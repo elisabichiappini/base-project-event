@@ -1,4 +1,5 @@
 const eventModel = require('../models/event.js');
+
 const index = (req, res) => {
     if (!events) throw new Error('errore nella lettura degli eventi');
     res.json(events);
