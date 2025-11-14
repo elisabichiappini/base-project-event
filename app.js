@@ -8,14 +8,6 @@ app.use(express.json());
 // ROUTER EVENTI
 const routerEvents = require('./routers/events.js');
 
-//MIDDLEWARE IMPORT
-const errorFormatter = require('./middlewares/errorFormatter.js');
-const routerNotFound = require('./middlewares/routerNotFound.js');
-
-//applicazione dei middleware
-app.use(errorFormatter);
-app.use(routerNotFound);
-
 // 👉 HOME qui, NON nel router events
 app.get('/', (req, res) => {
     res.send(`
@@ -47,16 +39,13 @@ app.get('/', (req, res) => {
 // 👉 Monta il router degli eventi
 app.use('/events', routerEvents);
 
-// MIDDLEWARE LOG
-app.use((req, res, next) => {
-    console.log(`[${req.method}] ${req.url}`);
-    next();
-});
+//MIDDLEWARE IMPORT
+const errorFormatter = require('./middlewares/errorFormatter.js');
+const routerNotFound = require('./middlewares/routerNotFound.js');
 
-// ERRORE 404
-app.use((req, res) => {
-    res.status(404).json({ error: 'rotta non trovata' });
-});
+//applicazione dei middleware
+app.use(errorFormatter);
+app.use(routerNotFound);
 
 app.listen(port, () => {
     console.log(`Server attivo su http://${host}:${port}`);
