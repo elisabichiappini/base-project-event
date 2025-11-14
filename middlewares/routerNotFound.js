@@ -1,4 +1,5 @@
 module.exports = (req, res, next) => {
+    // Codice HTTP per "Not Found"
     const statusCode = 404;
     res.format({
         html: () => {
