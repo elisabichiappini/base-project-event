@@ -1,14 +1,18 @@
+//importo express
 const express = require('express');
 const app = express();
+
+//configurazione port e host
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || 'localhost';
 
+//per poter fare richieste POST e PUT con body JSON.
 app.use(express.json());
 
 // ROUTER EVENTI
 const routerEvents = require('./routers/events.js');
 
-// 👉 HOME qui, NON nel router events
+// rotta home
 app.get('/', (req, res) => {
     res.send(`
         <h1>Benvenuti nella event api</h1>
@@ -36,7 +40,7 @@ app.get('/', (req, res) => {
     // });
 });
 
-// 👉 Monta il router degli eventi
+// rotta events
 app.use('/events', routerEvents);
 
 //MIDDLEWARE IMPORT
@@ -47,6 +51,7 @@ const routerNotFound = require('./middlewares/routerNotFound.js');
 app.use(errorFormatter);
 app.use(routerNotFound);
 
+//avvio server
 app.listen(port, () => {
     console.log(`Server attivo su http://${host}:${port}`);
 });

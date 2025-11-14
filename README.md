@@ -34,3 +34,13 @@ GET /events/:id → SHOW
 POST /events → STORE
 
 PUT /events/:id → UPDATE
+
+
+### ordine di applicazione middleware
+Middleware globali
+
+Router
+
+Middleware error handler
+
+Middleware 404
