@@ -11,6 +11,10 @@ app.use(express.json());
 
 // ROUTER EVENTI
 const routerEvents = require('./routers/events.js');
+//MIDDLEWARE IMPORT
+const errorFormatter = require('./middlewares/errorFormatter.js');
+const routerNotFound = require('./middlewares/routerNotFound.js');
+
 
 // rotta home
 app.get('/', (req, res) => {
@@ -43,12 +47,10 @@ app.get('/', (req, res) => {
 // rotta events
 app.use('/events', routerEvents);
 
-//MIDDLEWARE IMPORT
-const errorFormatter = require('./middlewares/errorFormatter.js');
-const routerNotFound = require('./middlewares/routerNotFound.js');
-
 //applicazione dei middleware
+//GESTIONE ERRORI
 app.use(errorFormatter);
+//GESTIONE 404
 app.use(routerNotFound);
 
 //avvio server
