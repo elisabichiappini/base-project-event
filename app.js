@@ -10,15 +10,30 @@ const routerEvents = require('./routers/events.js');
 
 // 👉 HOME qui, NON nel router events
 app.get('/', (req, res) => {
-    res.json({
-        message: "Benvenuta nella Event API 🎉",
-        endpoints: {
-            listaEventi: "/events",
-            eventoSingolo: "/events/:id",
-            creaEvento: "POST /events",
-            aggiornaEvento: "PUT /events/:id"
-        }
-    });
+    res.send(`
+        <h1>Benvenuti nella event api</h1>
+        <a href="/events" target=_blank>clicca qui epr vedere gli eventi</a>
+        <div>
+        <p>endpoints:</p>
+        <ul>
+            <li>listaEventi: "/events"</li>
+            <li>eventoSingolo: "/events/:id"</li>
+            <li>creaEvento: "POST /events"</li>
+            <li>aggiornaEvento: "PUT /events/:id"</li>
+        </ul>
+        </div>
+        `)
+
+    //questo codice è in caso di risposta dal servere in json
+    // res.json({
+    //     message: "Benvenuta nella Event API 🎉",
+    //     endpoints: {
+    //         listaEventi: "/events",
+    //         eventoSingolo: "/events/:id",
+    //         creaEvento: "POST /events",
+    //         aggiornaEvento: "PUT /events/:id"
+    //     }
+    // });
 });
 
 // 👉 Monta il router degli eventi
