@@ -8,6 +8,14 @@ app.use(express.json());
 // ROUTER EVENTI
 const routerEvents = require('./routers/events.js');
 
+//MIDDLEWARE IMPORT
+const errorFormatter = require('./middlewares/errorFormatter.js');
+const routerNotFound = require('./middlewares/routerNotFound.js');
+
+//applicazione dei middleware
+app.use(errorFormatter);
+app.use(routerNotFound);
+
 // 👉 HOME qui, NON nel router events
 app.get('/', (req, res) => {
     res.send(`
